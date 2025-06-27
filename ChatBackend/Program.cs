@@ -1,58 +1,59 @@
-// --- The Complete and Corrected Program.cs ---
-
+using Microsoft.AspNetCore.SignalR;
+using YourNamespace.Services; // Replace with actual namespace
+using YourNamespace.Hubs;     // Replace with actual namespace
 
 var builder = WebApplication.CreateBuilder(args);
 
-// --- Define the CORS policy name ---
+// --- 1. Define CORS policy name ---
 var MyCorsPolicy = "_myCorsPolicy";
 
-// --- 1. Read the React App URL from appsettings.json ---
-// This makes your code cleaner and more configurable.
-var reactAppUrl = builder.Configuration["CorsPolicy:ReactAppUrl"];
+// --- 2. Read multiple React URLs (local + production) from config ---
+var reactAppUrlDev = builder.Configuration["CorsPolicy:ReactAppUrl"];
+var reactAppUrlProd = builder.Configuration["CorsPolicy:ReactAppUrlProd"];
 
-// --- 2. Configure Services ---
+// --- 3. Configure Services ---
 
-// Add CORS services and define our policy
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: MyCorsPolicy,
-                      policy =>
-                      {
-                          // Use the URL we read from the config file!
-                          policy.WithOrigins(reactAppUrl) 
-                                .AllowAnyHeader()
-                                .AllowAnyMethod()
-                                .AllowCredentials();
-                      });
+    options.AddPolicy(name: MyCorsPolicy, policy =>
+    {
+        policy.WithOrigins(reactAppUrlDev, reactAppUrlProd)
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials();
+    });
 });
 
 builder.Services.AddSignalR();
 builder.Services.AddHttpClient();
-
-// This line requires IModerationService.cs and NeutrinoApiModerationService.cs to exist
 builder.Services.AddSingleton<IModerationService, NeutrinoApiModerationService>();
-
 builder.Services.AddControllers();
 
-// --- 3. Build the App ---
+// --- 4. Build the App ---
 var app = builder.Build();
 
-// --- 4. Configure the HTTP Pipeline ---
+// --- 5. Configure HTTP Request Pipeline ---
 
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
 }
 
-// This MUST be in the correct order
+// Enable CORS before routing
 app.UseCors(MyCorsPolicy);
+
 app.UseRouting();
 app.UseAuthorization();
 
-// This line requires ChatHub.cs and ChatMessage.cs to exist
-app.MapHub<ChatHub>("/chathub"); 
+// Set up SignalR hub endpoint
+app.MapHub<ChatHub>("/chathub");
 
+// Set up controllers
 app.MapControllers();
 
-// --- 5. Run the App ---
+// --- 6. Bind to Render's provided port ---
+var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
+app.Urls.Add($"http://*:{port}");
+
+// --- 7. Run the App ---
 app.Run();
