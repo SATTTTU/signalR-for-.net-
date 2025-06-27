@@ -1,0 +1,15 @@
+/home/satish-timalsina/Desktop/Mannko/socket/ChatBackend/out/ChatBackend
+/home/satish-timalsina/Desktop/Mannko/socket/ChatBackend/out/appsettings.Development.json
+/home/satish-timalsina/Desktop/Mannko/socket/ChatBackend/out/appsettings.json
+/home/satish-timalsina/Desktop/Mannko/socket/ChatBackend/out/ChatBackend.dll
+/home/satish-timalsina/Desktop/Mannko/socket/ChatBackend/out/ChatBackend.deps.json
+/home/satish-timalsina/Desktop/Mannko/socket/ChatBackend/out/ChatBackend.runtimeconfig.json
+/home/satish-timalsina/Desktop/Mannko/socket/ChatBackend/out/ChatBackend.pdb
+/home/satish-timalsina/Desktop/Mannko/socket/ChatBackend/out/Microsoft.Extensions.DependencyInjection.Abstractions.dll
+/home/satish-timalsina/Desktop/Mannko/socket/ChatBackend/out/Microsoft.Extensions.Diagnostics.Abstractions.dll
+/home/satish-timalsina/Desktop/Mannko/socket/ChatBackend/out/Microsoft.Extensions.Hosting.Abstractions.dll
+/home/satish-timalsina/Desktop/Mannko/socket/ChatBackend/out/Microsoft.Extensions.Logging.Abstractions.dll
+/home/satish-timalsina/Desktop/Mannko/socket/ChatBackend/out/Microsoft.Extensions.ObjectPool.dll
+/home/satish-timalsina/Desktop/Mannko/socket/ChatBackend/out/Microsoft.Extensions.Options.dll
+/home/satish-timalsina/Desktop/Mannko/socket/ChatBackend/out/Newtonsoft.Json.dll
+/home/satish-timalsina/Desktop/Mannko/socket/ChatBackend/out/System.Net.WebSockets.WebSocketProtocol.dll

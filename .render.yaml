@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: maanko-sathi-backend
+    env: dotnet
+    buildCommand: "dotnet publish -c Release -o out"
+    startCommand: "dotnet out/YourProjectName.dll"
+    envVars:
+      - key: NeutrinoApi__UserId
+        sync: false
+      - key: NeutrinoApi__ApiKey
+        sync: false
