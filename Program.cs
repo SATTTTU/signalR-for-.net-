@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.SignalR;
- using ChatBackend.Services;
+using ChatBackend.Services;
 using ChatBackend.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,20 +7,32 @@ var builder = WebApplication.CreateBuilder(args);
 // --- 1. Define CORS policy name ---
 var MyCorsPolicy = "_myCorsPolicy";
 
-// --- 2. Read multiple React URLs (local + production) from config ---
-var reactAppUrlDev = builder.Configuration["CorsPolicy:ReactAppUrl"];
+// --- 2. Read Production Origin from appsettings.json ---
 var reactAppUrlProd = builder.Configuration["CorsPolicy:ReactAppUrlProd"];
 
 // --- 3. Configure Services ---
-
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: MyCorsPolicy, policy =>
     {
-        policy.WithOrigins(reactAppUrlDev, reactAppUrlProd)
-              .AllowAnyHeader()
-              .AllowAnyMethod()
-              .AllowCredentials();
+        policy
+            .SetIsOriginAllowed(origin =>
+            {
+                if (string.IsNullOrEmpty(origin)) return false;
+
+                try
+                {
+                    var uri = new Uri(origin);
+                    return uri.Host == "localhost" || origin == reactAppUrlProd;
+                }
+                catch
+                {
+                    return false;
+                }
+            })
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
     });
 });
 
@@ -33,7 +45,6 @@ builder.Services.AddControllers();
 var app = builder.Build();
 
 // --- 5. Configure HTTP Request Pipeline ---
-
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
@@ -45,15 +56,15 @@ app.UseCors(MyCorsPolicy);
 app.UseRouting();
 app.UseAuthorization();
 
-// Set up SignalR hub endpoint
+// --- 6. Set up SignalR hub endpoint ---
 app.MapHub<ChatHub>("/chathub");
 
-// Set up controllers
+// --- 7. Set up controllers ---
 app.MapControllers();
 
-// --- 6. Bind to Render's provided port ---
+// --- 8. Bind to Render's provided port ---
 var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
 app.Urls.Add($"http://*:{port}");
 
-// --- 7. Run the App ---
+// --- 9. Run the App ---
 app.Run();
