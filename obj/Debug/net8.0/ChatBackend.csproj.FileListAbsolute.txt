@@ -34,3 +34,8 @@
 /home/satish-timalsina/Desktop/Mannko/socket/ChatBackend/obj/Debug/net8.0/ChatBackend.pdb
 /home/satish-timalsina/Desktop/Mannko/socket/ChatBackend/obj/Debug/net8.0/ChatBackend.genruntimeconfig.cache
 /home/satish-timalsina/Desktop/Mannko/socket/ChatBackend/obj/Debug/net8.0/ref/ChatBackend.dll
+/home/satish-timalsina/Desktop/Mannko/socket/ChatBackend/bin/Debug/net8.0/out/web.config
+/home/satish-timalsina/Desktop/Mannko/socket/ChatBackend/bin/Debug/net8.0/out/appsettings.Development.json
+/home/satish-timalsina/Desktop/Mannko/socket/ChatBackend/bin/Debug/net8.0/out/appsettings.json
+/home/satish-timalsina/Desktop/Mannko/socket/ChatBackend/bin/Debug/net8.0/out/ChatBackend.deps.json
+/home/satish-timalsina/Desktop/Mannko/socket/ChatBackend/bin/Debug/net8.0/out/ChatBackend.runtimeconfig.json
